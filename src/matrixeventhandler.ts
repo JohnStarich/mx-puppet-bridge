@@ -199,7 +199,7 @@ export class MatrixEventHandler {
 			return;
 		}
 		// we handle stickers and reactions as message events
-		log.info(`ENCRYPTED ${event}?`);
+		log.info(`ENCRYPTED ${JSON.stringify(event)}?`);
 		if (["m.reaction", "m.sticker", "m.room.message", "m.room.encrypted"].includes(event.type)) {
 			const evt = new MessageEvent<MessageEventContent>(event.raw);
 			await this.handleMessageEvent(roomId, evt);

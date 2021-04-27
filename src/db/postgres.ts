@@ -52,15 +52,7 @@ export class Postgres implements IDatabaseConnector {
 		);
 		log.info(`Opening ${logConnString}`);
 		this.db = pgp(this.connectionString);
-		log.info("DB started")
-		// Wait for postgres to be ready by returning a promise for a connection
-		try {
 		await this.db.connect();
-		} catch (error) {
-			log.error(`Failed to connect: ${error}`)
-			throw error
-		}
-		log.info("DB connected")
 	}
 
 	public async Get(sql: string, parameters?: ISqlCommandParameters): Promise<ISqlRow|null> {
