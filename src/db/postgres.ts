@@ -45,13 +45,15 @@ export class Postgres implements IDatabaseConnector {
 			buckets: [0.002, 0.005, 0.0075, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5],
 		});
 	}
-	public Open() {
+	public async Open(): Promise<void> {
 		// Hide username:password
 		const logConnString = this.connectionString.substr(
 			this.connectionString.indexOf("@") || 0,
 		);
 		log.info(`Opening ${logConnString}`);
 		this.db = pgp(this.connectionString);
+		// Wait for postgres to be ready by returning a promise for a connection
+ 		return this.db.connect();
 	}
 
 	public async Get(sql: string, parameters?: ISqlCommandParameters): Promise<ISqlRow|null> {

@@ -202,7 +202,7 @@ export class Store {
 			this.db = new SQLite3(this.config.filename);
 		}
 		try {
-			this.db.Open();
+			await Promise.resolve(this.db.Open());
 			this.pRoomStore = new DbRoomStore(this.db, undefined, this.bridge.protocol?.id);
 			this.pUserStore = new DbUserStore(this.db, undefined, this.bridge.protocol?.id);
 			this.pGroupStore = new DbGroupStore(this.db, undefined, this.bridge.protocol?.id);
