@@ -54,7 +54,12 @@ export class Postgres implements IDatabaseConnector {
 		this.db = pgp(this.connectionString);
 		log.info("DB started")
 		// Wait for postgres to be ready by returning a promise for a connection
+		try {
 		await this.db.connect();
+		} catch (error) {
+			log.error(`Failed to connect: ${error}`)
+			throw error
+		}
 		log.info("DB connected")
 	}
 
